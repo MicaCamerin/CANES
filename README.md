@@ -100,4 +100,4 @@ Funcionalidad:
 
 --------------------------
 
-Proyecto desarrollado por Micaela Camerini para el curso Backend III — Coderhouse.
+Proyecto desarrollado por Micaela Julieta Camerini para el curso Backend III — Coderhouse.

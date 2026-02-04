@@ -2,6 +2,7 @@ import "dotenv/config";
 import { connectMongoDB } from "./config/mongo.js";
 import express from "express";
 import mocksRouter from "./routes/mocks.router.js";
+import adoptionRouter from "./routes/adoption.router.js";
 const app = express();
 
 // Middleware para poder leer JSON
@@ -17,6 +18,7 @@ app.get("/", (req, res) => {
 const PORT = process.env.PORT || 8080;
 
 app.use("/api/mocks", mocksRouter);
+app.use("/api/adoptions", adoptionRouter);
 
 connectMongoDB();
 
