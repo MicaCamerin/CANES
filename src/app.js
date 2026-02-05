@@ -1,6 +1,5 @@
 import swaggerJSDoc from "swagger-jsdoc";
 import swaggerUi from "swagger-ui-express";
-import path from "path";
 import "dotenv/config";
 import { connectMongoDB } from "./config/mongo.js";
 import express from "express";

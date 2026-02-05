@@ -1,60 +1,44 @@
+
 import { Router } from "express";
 import { UserModel } from "../models/user.model.js";
 import { PetModel } from "../models/pet.model.js";
 
 const router = Router();
 
-/**
- * POST /api/adoptions/:uid/:pid
- * Adoptar una mascota
- */
+// GET /api/adoptions
+router.get("/", async (req, res) => {
+  try {
+    res.send({
+      status: "success",
+      payload: []
+    });
+  } catch (error) {
+    res.status(500).send({ status: "error", error: error.message });
+  }
+});
+
+// POST /api/adoptions/:uid/:pid
 router.post("/:uid/:pid", async (req, res) => {
   try {
     const { uid, pid } = req.params;
 
     const user = await UserModel.findById(uid);
-    const pet = await PetModel.findById(pid);
+    if (!user) {
+      return res.status(404).send({ status: "error", error: "User not found" });
+    }
 
-    if (!user || !pet) {
-      return res.status(404).json({
-        status: "error",
-        message: "Usuario o mascota no encontrada"
-      });
+    const pet = await PetModel.findById(pid);
+    if (!pet) {
+      return res.status(404).send({ status: "error", error: "Pet not found" });
     }
 
     user.pets.push(pet._id);
     await user.save();
 
-    res.json({
-      status: "success",
-      message: "Mascota adoptada",
-      user
-    });
-  } catch (error) {
-    res.status(500).json({
-      status: "error",
-      message: "Error en adopción"
-    });
-  }
-});
+    res.send({ status: "success" });
 
-/**
- * GET /api/adoptions
- * Listar adopciones
- */
-router.get("/", async (req, res) => {
-  try {
-    const users = await UserModel.find().populate("pets");
-
-    res.json({
-      status: "success",
-      payload: users
-    });
   } catch (error) {
-    res.status(500).json({
-      status: "error",
-      message: "Error al obtener adopciones"
-    });
+    res.status(500).send({ status: "error", error: error.message });
   }
 });
 

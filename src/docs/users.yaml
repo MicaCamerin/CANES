@@ -1,0 +1,46 @@
+openapi: 3.0.1
+
+info:
+  title: API CANES
+  description: Módulo de Usuarios
+  version: 1.0.0
+
+paths:
+  /api/users:
+    get:
+      summary: Obtener todos los usuarios
+      tags:
+        - Users
+      responses:
+        "200":
+          description: Lista de usuarios
+
+    post:
+      summary: Crear un usuario
+      tags:
+        - Users
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/User"
+      responses:
+        "201":
+          description: Usuario creado
+
+components:
+  schemas:
+    User:
+      type: object
+      properties:
+        first_name:
+          type: string
+        last_name:
+          type: string
+        email:
+          type: string
+        password:
+          type: string
+        role:
+          type: string
